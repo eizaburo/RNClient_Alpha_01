@@ -101,9 +101,9 @@ class SignUp extends React.Component {
                                             title='サインアップ'
                                             onPress={handleSubmit}
                                             buttonStyle={{ marginTop: 20 }}
-                                            backgroundColor='#6666FF'
-                                            loading={this.state.spinner}
-                                            disabled={isSubmitting}
+                                            backgroundColor='#CC9933'
+                                            borderRadius={20}
+                                            icon={{ name: 'user-plus', type: 'font-awesome' }}
                                         />
                                     </Card>
                                 )

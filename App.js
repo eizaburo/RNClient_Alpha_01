@@ -41,10 +41,10 @@ const HomeTab = createBottomTabNavigator(
             screen: createStackNavigator({ screen: Home }, {
                 defaultNavigationOptions: ({ navigation }) => ({
                     headerStyle: {
-                        backgroundColor: '#eee',
+                        backgroundColor: '#0099FF',
                     },
                     headerLeft: (
-                        <Icon name="bars" size={24} onPress={() => { navigation.openDrawer() }} style={{ paddingLeft: 20 }} />
+                        <Icon name="bars" size={24} onPress={() => { navigation.openDrawer() }} style={{ paddingLeft: 20 }} color='#fff' />
                     ),
                 })
             }),
@@ -56,10 +56,10 @@ const HomeTab = createBottomTabNavigator(
             screen: createStackNavigator({ screen: Identiry }, {
                 defaultNavigationOptions: ({ navigation }) => ({
                     headerStyle: {
-                        backgroundColor: '#eee',
+                        backgroundColor: '#0099FF',
                     },
                     headerLeft: (
-                        <Icon name="bars" size={24} onPress={() => { navigation.openDrawer() }} style={{ paddingLeft: 20 }} />
+                        <Icon name="bars" size={24} onPress={() => { navigation.openDrawer() }} style={{ paddingLeft: 20 }} color='#fff' />
                     ),
                 })
             }),
@@ -71,10 +71,10 @@ const HomeTab = createBottomTabNavigator(
             screen: createStackNavigator({ screen: Profile }, {
                 defaultNavigationOptions: ({ navigation }) => ({
                     headerStyle: {
-                        backgroundColor: '#eee',
+                        backgroundColor: '#0099FF',
                     },
                     headerLeft: (
-                        <Icon name="bars" size={24} onPress={() => { navigation.openDrawer() }} style={{ paddingLeft: 20 }} />
+                        <Icon name="bars" size={24} onPress={() => { navigation.openDrawer() }} style={{ paddingLeft: 20 }} color='#fff' />
                     ),
                 })
             }),
@@ -82,12 +82,12 @@ const HomeTab = createBottomTabNavigator(
                 tabBarIcon: ({ tintColor }) => <Icon size={24} name="user" color={tintColor} />
             }
         }
-    },{
-        tabBarOptions:{
-            style:{
-                backgroundColor: '#000099',
+    }, {
+        tabBarOptions: {
+            style: {
+                backgroundColor: '#0099FF',
             },
-            inactiveTintColor: '#bbb',
+            inactiveTintColor: '#ccc',
             activeTintColor: '#fff'
         }
     }
@@ -113,9 +113,10 @@ const SignedOut = createStackNavigator(
     {
         defaultNavigationOptions: {
             headerStyle: {
-                backgroundColor: '#eee',
-            }
-        }
+                backgroundColor: '#0099FF',
+            },
+            headerTintColor: '#fff', // < Back ボタンの色変更
+        },
     }
 );
 

@@ -68,7 +68,7 @@ class SignIn extends React.Component {
                                         title='サインイン'
                                         onPress={handleSubmit}
                                         buttonStyle={{ marginTop: 20 }}
-                                        backgroundColor='#03A9F4'
+                                        backgroundColor='#0099FF'
                                         loading={this.state.spinner}
                                         disabled={isSubmitting}
                                         borderRadius={20}
@@ -90,7 +90,7 @@ class SignIn extends React.Component {
                             title='サインアップ'
                             onPress={() => this.handleSignUp()}
                             buttonStyle={{ marginTop: 0 }}
-                            backgroundColor='#6666FF'
+                            backgroundColor='#CC9933'
                             borderRadius={20}
                             icon={{name: 'user-plus', type: 'font-awesome'}} 
                         />
