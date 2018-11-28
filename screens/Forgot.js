@@ -4,6 +4,9 @@ import { Button, FormLabel, FormInput, FormValidationMessage, Card } from 'react
 import { Formik, yupToFormErrors } from 'formik';
 import * as Yup from 'yup';
 
+//axios
+import axios from 'axios';
+
 class Forgot extends React.Component {
     render() {
         return (
@@ -43,8 +46,14 @@ class Forgot extends React.Component {
     }
 
     //サインアウトボタン押したとき
-    handleForgot = () => {
-        alert('リセットメールを送信しました。')
+    handleForgot = async (values) => {
+        try {
+            const reset = await axios.post('http://localhost:8000/api/password/email', { email: values.email });
+            alert('メールを送信しました。');
+        } catch (error) {
+            console.log(error);
+            alert('メールの送信に失敗しました。');
+        }
     }
 }
 
