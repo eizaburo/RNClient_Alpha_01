@@ -18,7 +18,18 @@ class Forgot extends React.Component {
                         }}
                         onSubmit={(values) => this.handleForgot(values)}
                         validationSchema={Yup.object().shape({
-                            email: Yup.string().email('emailの形式で入力して下さい。').required('emailは必須です。'),
+                            email: Yup
+                                .string()
+                                .email('emailの形式で入力して下さい。')
+                                .required('emailは必須です。')
+                                .test('mail_exist', 'メールが存在しません。', async (value) => {
+                                    const res = await axios.post('http://localhost:8000/api/ismailexist', { email: value });
+                                    if(res.data.exist === true){
+                                        return true;
+                                    }else{
+                                        return false;
+                                    }
+                                }),
                         })}
                     >
                         {
@@ -30,7 +41,7 @@ class Forgot extends React.Component {
                                         value={values.email}
                                         onChangeText={handleChange('email')}
                                     />
-                                    {touched.email && <FormValidationMessage>{errors.email}</FormValidationMessage>}
+                                    {(touched.email && errors.email) && <FormValidationMessage>{errors.email}</FormValidationMessage>}
                                     <Button
                                         title='リセットメールを送信'
                                         onPress={handleSubmit}
