@@ -82,6 +82,14 @@ const HomeTab = createBottomTabNavigator(
                 tabBarIcon: ({ tintColor }) => <Icon size={24} name="user" color={tintColor} />
             }
         }
+    },{
+        tabBarOptions:{
+            style:{
+                backgroundColor: '#000099',
+            },
+            inactiveTintColor: '#bbb',
+            activeTintColor: '#fff'
+        }
     }
 );
 
