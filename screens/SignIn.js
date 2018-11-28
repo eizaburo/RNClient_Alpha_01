@@ -113,6 +113,11 @@ class SignIn extends React.Component {
 
         } catch (error) {
             console.log(error);
+            if(error.message === 'Network Error'){
+                alert('サーバに接続できません。');
+            }else{
+                alert('サインインに失敗しました。');
+            }
         }
     }
 

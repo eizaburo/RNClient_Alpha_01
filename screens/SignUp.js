@@ -8,6 +8,9 @@ import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import { updateUserData } from '../actions/userAction';
 
+//axios
+import axios from 'axios';
+
 class SignUp extends React.Component {
     render() {
         return (
@@ -95,7 +98,7 @@ class SignUp extends React.Component {
     }
 
     //サインアップボタン押したとき
-    handleSignUp = (values) => {
+    handleSignUp = async (values) => {
 
         //値の取得
         const name = values.name;
@@ -103,22 +106,45 @@ class SignUp extends React.Component {
         const password = values.password;
         const passwordConfirm = values.passwordConfirm;
 
-        //登録処理
-        //実際にはサーバサイドと連携したりする
+        try {
 
-        //サインイン処理
-        const user = {
-            id: 99,
-            name: name,
-            email: email,
-            access_token: 'token',
+            //登録
+            const register = await axios.post('http://localhost:8000/api/register', {
+                name: name,
+                email: email,
+                password: password
+            });
+
+            //戻り値にuserが含まれるが利用しない（機能の共通化のため）
+            //emailとpasswordでtoken取得
+            const response_token = await axios.post('http://localhost:8000/oauth/token', {
+                grant_type: 'password',
+                client_id: '2',
+                client_secret: '6kjaYUMN2xGHbLksa62IE9KhChZH4bcp4Bwxk9Zi',
+                username: email,
+                password: password,
+            });
+            const access_token = response_token.data.access_token;
+
+            //取得したtokenを利用してuser情報を取得
+            const AuthStr = 'Bearer ' + access_token;
+            const user = await axios.get('http://localhost:8000/api/user', { 'headers': { 'Authorization': AuthStr } });
+
+            //取得したデータをstoreにセット
+            user.data.access_token = access_token;
+            this.props.updateUserData(user.data);
+
+            //移動
+            this.props.navigation.navigate('SignedIn');
+
+        } catch (error) {
+            console.log(error);
+            if(error.message === 'Network Error'){
+                alert('サーバに接続できません。');
+            }else{
+                alert('サインアップに失敗しました。');
+            }
         }
-
-        //更新
-        this.props.updateUserData(user);
-
-        //移動
-        this.props.navigation.navigate('SignedIn')
     }
 }
 
