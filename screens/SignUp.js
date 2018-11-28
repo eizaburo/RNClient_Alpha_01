@@ -33,7 +33,15 @@ class SignUp extends React.Component {
                                 email: Yup
                                     .string()
                                     .email('emailの形式ではありません。')
-                                    .required('emailは必須です。'),
+                                    .required('emailは必須です。')
+                                    .test('mail_exist', 'このemailは既に登録されています。', async (value) => {
+                                        const res = await axios.post('http://localhost:8000/api/ismailexist', { email: value });
+                                        if(res.data.exist === true){
+                                            return false;
+                                        }else{
+                                            return true;
+                                        }
+                                    }),
                                 password: Yup
                                     .string()
                                     .min(4, '4文字以上です。')
@@ -139,9 +147,9 @@ class SignUp extends React.Component {
 
         } catch (error) {
             console.log(error);
-            if(error.message === 'Network Error'){
+            if (error.message === 'Network Error') {
                 alert('サーバに接続できません。');
-            }else{
+            } else {
                 alert('サインアップに失敗しました。');
             }
         }
