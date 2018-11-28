@@ -26,6 +26,7 @@ class Drawer extends React.Component {
                             //移動
                             this.props.navigation.navigate('SignedOut');
                         }}
+                        borderRadius={20}
                     />
                 </ScrollView>
             </View>

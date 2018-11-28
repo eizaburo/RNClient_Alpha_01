@@ -33,6 +33,8 @@ class Profile extends React.Component {
                             title='サインアウト'
                             onPress={() => this.handleSignOut()}
                             buttonStyle={{ marginTop: 20 }}
+                            borderRadius={20}
+                            icon={{name: 'sign-out', type: 'font-awesome'}} 
                         />
                     </Card>
                 </ScrollView>

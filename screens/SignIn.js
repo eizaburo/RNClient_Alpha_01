@@ -14,6 +14,9 @@ import axios from 'axios';
 //Laravel
 import * as Laravel from '../Laravel';
 
+//icon
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 class SignIn extends React.Component {
 
     state = {
@@ -29,7 +32,7 @@ class SignIn extends React.Component {
                             email: 'user1@test.com',
                             password: 'testtest',
                         }}
-                        onSubmit={(values,{setSubmitting}) => this.handleSignIn(values,{setSubmitting})}
+                        onSubmit={(values, { setSubmitting }) => this.handleSignIn(values, { setSubmitting })}
                         validationSchema={Yup.object().shape({
                             email: Yup
                                 .string()
@@ -68,11 +71,15 @@ class SignIn extends React.Component {
                                         backgroundColor='#03A9F4'
                                         loading={this.state.spinner}
                                         disabled={isSubmitting}
+                                        borderRadius={20}
+                                        icon={{name: 'sign-in', type: 'font-awesome'}} 
                                     />
                                     <Button
                                         title='パスワード忘れ'
                                         onPress={() => this.handleForgot()}
                                         buttonStyle={{ marginTop: 30 }}
+                                        borderRadius={20}
+                                        icon={{name: 'question-circle', type: 'font-awesome'}} 
                                     />
                                 </Card>
                             )
@@ -84,6 +91,8 @@ class SignIn extends React.Component {
                             onPress={() => this.handleSignUp()}
                             buttonStyle={{ marginTop: 0 }}
                             backgroundColor='#6666FF'
+                            borderRadius={20}
+                            icon={{name: 'user-plus', type: 'font-awesome'}} 
                         />
                     </Card>
                 </ScrollView>
@@ -92,7 +101,7 @@ class SignIn extends React.Component {
     }
 
     //サインインボタン押したとき
-    handleSignIn = async (values,{setSubmitting}) => {
+    handleSignIn = async (values, { setSubmitting }) => {
 
         //spinner on
         this.setState({ spinner: true });
@@ -103,7 +112,7 @@ class SignIn extends React.Component {
 
         try {
             //token要求
-            const access_token = await Laravel.getToken(email,password);
+            const access_token = await Laravel.getToken(email, password);
 
             //取得したtokenでユーザー情報取得
             const AuthStr = 'Bearer ' + access_token;
