@@ -21,7 +21,7 @@ class Forgot extends React.Component {
                         initialValues={{
                             email: ''
                         }}
-                        onSubmit={(values) => this.handleForgot(values)}
+                        onSubmit={(values, { setSubmitting }) => this.handleForgot(values, { setSubmitting })}
                         validationSchema={Yup.object().shape({
                             email: Yup
                                 .string()
@@ -38,7 +38,7 @@ class Forgot extends React.Component {
                         })}
                     >
                         {
-                            ({ handleSubmit, handleChange, values, errors, touched, handleBlur }) => (
+                            ({ handleSubmit, handleChange, values, errors, touched, handleBlur, isSubmitting }) => (
                                 <Card title='パスワード忘れ'>
                                     <FormLabel>Email</FormLabel>
                                     <FormInput
@@ -52,6 +52,7 @@ class Forgot extends React.Component {
                                         onPress={handleSubmit}
                                         buttonStyle={{ marginTop: 20 }}
                                         loading={this.state.spinner}
+                                        disabled={isSubmitting}
                                     />
                                 </Card>
                             )
@@ -63,7 +64,7 @@ class Forgot extends React.Component {
     }
 
     //サインアウトボタン押したとき
-    handleForgot = async (values) => {
+    handleForgot = async (values, { setSubmitting }) => {
 
         //spinner on
         this.setState({ spinner: true });
@@ -72,11 +73,13 @@ class Forgot extends React.Component {
             const reset = await axios.post('http://localhost:8000/api/password/email', { email: values.email });
             //spinner off
             this.setState({ spinner: false });
+            setSubmitting(false);
             alert('メールを送信しました。');
         } catch (error) {
             console.log(error);
             //spinner off
             this.setState({ spinner: false });
+            setSubmitting(false);
             alert('メールの送信に失敗しました。');
         }
     }

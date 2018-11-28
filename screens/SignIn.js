@@ -29,7 +29,7 @@ class SignIn extends React.Component {
                             email: 'user1@test.com',
                             password: 'testtest',
                         }}
-                        onSubmit={values => this.handleSignIn(values)}
+                        onSubmit={(values,{setSubmitting}) => this.handleSignIn(values,{setSubmitting})}
                         validationSchema={Yup.object().shape({
                             email: Yup
                                 .string()
@@ -42,7 +42,7 @@ class SignIn extends React.Component {
                         })}
                     >
                         {
-                            ({ handleSubmit, handleChange, values, errors, touched, handleBlur }) => (
+                            ({ handleSubmit, handleChange, values, errors, touched, handleBlur, isSubmitting }) => (
                                 <Card title='サインイン'>
                                     <FormLabel>Email</FormLabel>
                                     <FormInput
@@ -67,6 +67,7 @@ class SignIn extends React.Component {
                                         buttonStyle={{ marginTop: 20 }}
                                         backgroundColor='#03A9F4'
                                         loading={this.state.spinner}
+                                        disabled={isSubmitting}
                                     />
                                     <Button
                                         title='パスワード忘れ'
@@ -91,7 +92,7 @@ class SignIn extends React.Component {
     }
 
     //サインインボタン押したとき
-    handleSignIn = async (values) => {
+    handleSignIn = async (values,{setSubmitting}) => {
 
         //spinner on
         this.setState({ spinner: true });
@@ -127,6 +128,8 @@ class SignIn extends React.Component {
             } else {
                 alert('サインインに失敗しました。');
             }
+
+            setSubmitting(false);
         }
     }
 

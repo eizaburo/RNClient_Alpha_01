@@ -32,7 +32,7 @@ class SignUp extends React.Component {
                                 password: 'testtest',
                                 passwordConfirm: 'testtest'
                             }}
-                            onSubmit={values => this.handleSignUp(values)}
+                            onSubmit={(values, { setSubmitting }) => this.handleSignUp(values, { setSubmitting })}
                             validationSchema={Yup.object().shape({
                                 name: Yup
                                     .string()
@@ -61,7 +61,7 @@ class SignUp extends React.Component {
                             })}
                         >
                             {
-                                ({ handleSubmit, handleChange, values, errors, touched, handleBlur }) => (
+                                ({ handleSubmit, handleChange, values, errors, touched, handleBlur, isSubmitting }) => (
                                     <Card title='サインアップ'>
                                         <FormLabel>名前</FormLabel>
                                         <FormInput
@@ -103,6 +103,7 @@ class SignUp extends React.Component {
                                             buttonStyle={{ marginTop: 20 }}
                                             backgroundColor='#6666FF'
                                             loading={this.state.spinner}
+                                            disabled={isSubmitting}
                                         />
                                     </Card>
                                 )
@@ -157,6 +158,7 @@ class SignUp extends React.Component {
             } else {
                 alert('サインアップに失敗しました。');
             }
+            setSubmitting(false);
         }
     }
 }

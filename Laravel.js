@@ -9,6 +9,7 @@ const HOST = 'http://localhost:8000';
 //URL
 const TOKEN_URL = HOST + '/oauth/token';
 const USER_URL = HOST + '/api/user';
+const REGISTER_URL = HOST + '/api/register';
 
 //パラメータ
 const CLIENT_ID = '2';
@@ -29,21 +30,26 @@ export const getToken = async (email, password) => {
     });
 
     return response_token.data.access_token;
+
 }
 
 //取得したtokenをheaderにセットしてuserの取得
 export const getUser = async (bearer) => {
+
     const user = await axios.get(USER_URL, { 'headers': { 'Authorization': bearer } });
     return user.data;
+
 }
 
 //register
 export const registerUser = async (name, email, password) => {
-    const register = await axios.post('http://localhost:8000/api/register', {
+
+    const register = await axios.post(REGISTER_URL, {
         name: name,
         email: email,
         password: password
     });
     //一応ユーザーを返す
     return register.data.user;
+
 }

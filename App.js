@@ -41,7 +41,7 @@ const HomeTab = createBottomTabNavigator(
 //SignedIn(Tab + Drawer)
 const SignedIn = createDrawerNavigator(
     {
-        Home: { screen: HomeTab }
+        Home: { screen: HomeTab },
     },
     {
         contentComponent: Drawer,
