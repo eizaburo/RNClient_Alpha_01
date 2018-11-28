@@ -33,8 +33,24 @@ import Drawer from './screens/Drawer';
 //Tab（ヘッダを表示するためstackを入れ子に）
 const HomeTab = createBottomTabNavigator(
     {
-        Home: { screen: createStackNavigator({ screen: Home }) },
-        Profile: { screen: createStackNavigator({ screen: Profile }) }
+        Home: {
+            screen: createStackNavigator({ screen: Home }, {
+                defaultNavigationOptions: {
+                    headerStyle: {
+                        backgroundColor: '#eee',
+                    }
+                }
+            })
+        },
+        Profile: {
+            screen: createStackNavigator({ screen: Profile }, {
+                defaultNavigationOptions: {
+                    headerStyle: {
+                        backgroundColor: '#eee',
+                    }
+                }
+            })
+        }
     }
 );
 
@@ -54,6 +70,13 @@ const SignedOut = createStackNavigator(
         SignIn: { screen: SignIn },
         SignUp: { screen: SignUp },
         Forgot: { screen: Forgot }
+    },
+    {
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#eee',
+            }
+        }
     }
 );
 
