@@ -32,6 +32,7 @@ import SignIn from './screens/SignIn';
 import SignUp from './screens/SignUp';
 import Forgot from './screens/Forgot';
 import Drawer from './screens/Drawer';
+import Identiry from './screens/Identiry';
 
 //Tab（ヘッダを表示するためstackを入れ子に）
 const HomeTab = createBottomTabNavigator(
@@ -49,6 +50,21 @@ const HomeTab = createBottomTabNavigator(
             }),
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => <Icon size={24} name="home" color={tintColor} />
+            }
+        },
+        Identiry: {
+            screen: createStackNavigator({ screen: Identiry }, {
+                defaultNavigationOptions: ({ navigation }) => ({
+                    headerStyle: {
+                        backgroundColor: '#eee',
+                    },
+                    headerLeft: (
+                        <Icon name="bars" size={24} onPress={() => { navigation.openDrawer() }} style={{ paddingLeft: 20 }} />
+                    ),
+                })
+            }),
+            navigationOptions: {
+                tabBarIcon: ({ tintColor }) => <Icon size={24} name="qrcode" color={tintColor} />
             }
         },
         Profile: {
