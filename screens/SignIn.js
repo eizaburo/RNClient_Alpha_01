@@ -12,6 +12,11 @@ import { updateUserData } from '../actions/userAction';
 import axios from 'axios';
 
 class SignIn extends React.Component {
+
+    state = {
+        spinner: false,
+    }
+
     render() {
         return (
             <View style={{ paddingVertical: 20, flex: 1 }}>
@@ -58,6 +63,7 @@ class SignIn extends React.Component {
                                         onPress={handleSubmit}
                                         buttonStyle={{ marginTop: 20 }}
                                         backgroundColor='#03A9F4'
+                                        loading={this.state.spinner}
                                     />
                                     <Button
                                         title='パスワード忘れ'
@@ -84,6 +90,9 @@ class SignIn extends React.Component {
     //サインインボタン押したとき
     handleSignIn = async (values) => {
 
+        //spinner on
+        this.setState({ spinner: true });
+
         //値の取得
         const email = values.email;
         const password = values.password;
@@ -102,20 +111,23 @@ class SignIn extends React.Component {
             const AuthStr = 'Bearer ' + access_token;
             const user = await axios.get('http://localhost:8000/api/user', { 'headers': { 'Authorization': AuthStr } });
 
+            //spinner off（とりあえずこの位置に入れる。移動の前だとwarning）
+            this.setState({ spinner: false });
+
             //取得した情報をstoreにセット（セッションセット）
             user.data.access_token = access_token;
-            console.log(user.data);
             this.props.updateUserData(user.data);
 
             //移動
             this.props.navigation.navigate('SignedIn');
 
-
         } catch (error) {
             console.log(error);
-            if(error.message === 'Network Error'){
+            //spinner off
+            this.setState({ spinner: false });
+            if (error.message === 'Network Error') {
                 alert('サーバに接続できません。');
-            }else{
+            } else {
                 alert('サインインに失敗しました。');
             }
         }

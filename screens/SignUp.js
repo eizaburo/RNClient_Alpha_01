@@ -12,6 +12,11 @@ import { updateUserData } from '../actions/userAction';
 import axios from 'axios';
 
 class SignUp extends React.Component {
+
+    state = {
+        spinner: false,
+    }
+
     render() {
         return (
             <View style={{ paddingVertical: 20, flex: 1 }}>
@@ -36,9 +41,9 @@ class SignUp extends React.Component {
                                     .required('emailは必須です。')
                                     .test('mail_exist', 'このemailは既に登録されています。', async (value) => {
                                         const res = await axios.post('http://localhost:8000/api/ismailexist', { email: value });
-                                        if(res.data.exist === true){
+                                        if (res.data.exist === true) {
                                             return false;
-                                        }else{
+                                        } else {
                                             return true;
                                         }
                                     }),
@@ -94,6 +99,7 @@ class SignUp extends React.Component {
                                             onPress={handleSubmit}
                                             buttonStyle={{ marginTop: 20 }}
                                             backgroundColor='#6666FF'
+                                            loading={this.state.spinner}
                                         />
                                     </Card>
                                 )
@@ -107,6 +113,9 @@ class SignUp extends React.Component {
 
     //サインアップボタン押したとき
     handleSignUp = async (values) => {
+
+        //spinner on
+        this.setState({ spinner: true });
 
         //値の取得
         const name = values.name;
@@ -138,6 +147,9 @@ class SignUp extends React.Component {
             const AuthStr = 'Bearer ' + access_token;
             const user = await axios.get('http://localhost:8000/api/user', { 'headers': { 'Authorization': AuthStr } });
 
+            //spinner off
+            this.setState({ spinner: false });
+
             //取得したデータをstoreにセット
             user.data.access_token = access_token;
             this.props.updateUserData(user.data);
@@ -147,6 +159,8 @@ class SignUp extends React.Component {
 
         } catch (error) {
             console.log(error);
+            //spinner off
+            this.setState({ spinner: false });
             if (error.message === 'Network Error') {
                 alert('サーバに接続できません。');
             } else {
