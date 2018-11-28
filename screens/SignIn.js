@@ -11,6 +11,9 @@ import { updateUserData } from '../actions/userAction';
 //axios
 import axios from 'axios';
 
+//Laravel
+import * as Laravel from '../Laravel';
+
 class SignIn extends React.Component {
 
     state = {
@@ -99,24 +102,18 @@ class SignIn extends React.Component {
 
         try {
             //token要求
-            const response_token = await axios.post('http://localhost:8000/oauth/token', {
-                grant_type: 'password',
-                client_id: '2',
-                client_secret: '6kjaYUMN2xGHbLksa62IE9KhChZH4bcp4Bwxk9Zi',
-                username: email,
-                password: password,
-            });
-            const access_token = response_token.data.access_token;
+            const access_token = await Laravel.getToken(email,password);
+
             //取得したtokenでユーザー情報取得
             const AuthStr = 'Bearer ' + access_token;
-            const user = await axios.get('http://localhost:8000/api/user', { 'headers': { 'Authorization': AuthStr } });
+            const user = await Laravel.getUser(AuthStr);
 
             //spinner off（とりあえずこの位置に入れる。移動の前だとwarning）
             this.setState({ spinner: false });
 
             //取得した情報をstoreにセット（セッションセット）
-            user.data.access_token = access_token;
-            this.props.updateUserData(user.data);
+            user.access_token = access_token;
+            this.props.updateUserData(user);
 
             //移動
             this.props.navigation.navigate('SignedIn');
