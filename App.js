@@ -38,11 +38,14 @@ const HomeTab = createBottomTabNavigator(
     {
         Home: {
             screen: createStackNavigator({ screen: Home }, {
-                defaultNavigationOptions: {
+                defaultNavigationOptions: ({ navigation }) => ({
                     headerStyle: {
                         backgroundColor: '#eee',
-                    }
-                }
+                    },
+                    headerLeft: (
+                        <Icon name="bars" size={24} onPress={() => { navigation.openDrawer() }} style={{ paddingLeft: 20 }} />
+                    ),
+                })
             }),
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => <Icon size={24} name="home" color={tintColor} />
@@ -50,11 +53,14 @@ const HomeTab = createBottomTabNavigator(
         },
         Profile: {
             screen: createStackNavigator({ screen: Profile }, {
-                defaultNavigationOptions: {
+                defaultNavigationOptions: ({ navigation }) => ({
                     headerStyle: {
                         backgroundColor: '#eee',
-                    }
-                }
+                    },
+                    headerLeft: (
+                        <Icon name="bars" size={24} onPress={() => { navigation.openDrawer() }} style={{ paddingLeft: 20 }} />
+                    ),
+                })
             }),
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => <Icon size={24} name="user" color={tintColor} />
