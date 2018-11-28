@@ -22,6 +22,9 @@ const mapDispatchToProps = dispatch => ({ updateUserData: (user) => dispatch(upd
 //persist
 import { PersistGate } from 'redux-persist/integration/react';
 
+//icon
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 //各screenの読み込み
 import Home from './screens/Home';
 import Profile from './screens/Profile';
@@ -40,7 +43,10 @@ const HomeTab = createBottomTabNavigator(
                         backgroundColor: '#eee',
                     }
                 }
-            })
+            }),
+            navigationOptions: {
+                tabBarIcon: ({ tintColor }) => <Icon size={24} name="home" color={tintColor} />
+            }
         },
         Profile: {
             screen: createStackNavigator({ screen: Profile }, {
@@ -49,7 +55,10 @@ const HomeTab = createBottomTabNavigator(
                         backgroundColor: '#eee',
                     }
                 }
-            })
+            }),
+            navigationOptions: {
+                tabBarIcon: ({ tintColor }) => <Icon size={24} name="user" color={tintColor} />
+            }
         }
     }
 );
